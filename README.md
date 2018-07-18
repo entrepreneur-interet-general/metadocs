@@ -37,6 +37,8 @@ Any `sphinx` module can be used as long as `make html` works and the built code 
 
 Default settings are that the Home Documentation will use a Material Design theme and Project Documentations will use Read The Docs's theme, to better distinguish the hierarchy. You can change that (in the global `mkdocs.yml` and in individual python projects' `conf.py`).
 
+![metadocs illustration](https://i.imgur.com/OyYGmOL.png)
+
 # Install
 
 `metadocs` requires python3 and mainly uses `sphinx`, `mkdocs` and `watchdog` as 3rd party libraries. Check out the [full requirements](/requirements.txt)
