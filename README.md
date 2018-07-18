@@ -61,7 +61,7 @@ metadocs serve
 
 Optionnaly you can specify a port with `metadocs serve -s your_port`
 
-<img src="http://g.recordit.co/3vikPzjJPv.gif" alt="metadocs demo" style="max-width:300px"></img>
+<img src="http://g.recordit.co/egF8bzx7qc.gif" alt="metadocs demo" style="max-width:300px"></img>
 
 You can also manually build the documentation with `build`:
 
@@ -142,7 +142,7 @@ Under the hood, `metadocs autodoc` runs `sphinx-quickstart`, updates default val
 
 If `metadocs autodoc`'s default values for the `sphinx` documentation don't suit you, do update `/path_to_your_documentation/your_project_3/source/conf.py`.
 
-<img src="http://g.recordit.co/uZohRwnmK1.gif" alt="metadocs autodoc demo" style="max-width:300px"></img>
+<img src="http://g.recordit.co/Jo299BwQC5.gif" alt="metadocs autodoc demo" style="max-width:300px"></img>
 
 ## Manual addition of a built documentation
 
