@@ -346,7 +346,7 @@ def add_project_to_doc_index(index_path, project_name):
                             project_name,
                         )
                     )
-                    l = "\n".join(project_strings) + "\n" + l
+                    l = "\n".join(project_strings) + "\n\n" + l
             else:
                 if "*" in l and "](" in l:
                     project_strings.append(l.replace("\n", ""))
