@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Version string
-__VERSION__ = "0.4"
+__VERSION__ = "0.4.0.1"
 
 # Key to state that a project's hard links must be updated
 PROJECT_KEY = "# Projects"
