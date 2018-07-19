@@ -201,9 +201,9 @@ def make_offline():
     css_path = dir_path / "site" / "assets" / "stylesheets"
     material_css = css_path / "material-style.css"
     if not material_css.exists():
-        file_path = Path(__file__).resolve().parent
-        copyfile(file_path / "material-style.css", material_css)
-        copyfile(file_path / "material-icons.woff2", css_path / "material-icons.woff2")
+        include_path = Path(__file__).resolve().parent / "include"
+        copyfile(include_path / "material-style.css", material_css)
+        copyfile(include_path / "material-icons.woff2", css_path / "material-icons.woff2")
 
     indexes = []
     for root, _, filenames in os.walk(dir_path / "site"):
