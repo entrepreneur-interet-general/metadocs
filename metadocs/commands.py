@@ -3,7 +3,7 @@
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
-# by the Free Software Foundation, either version 3 of the License, or 
+# by the Free Software Foundation, either version 3 of the License, or
 # any later version.
 
 # This program is distributed in the hope that it will be useful,
@@ -32,6 +32,7 @@ from watchdog.observers import Observer
 from . import utils
 from .conf import __VERSION__, PORT
 
+from ruamel.yaml import YAML
 
 def custom_formatwarning(msg, *args, **kwargs):
     # ignore everything except the message
@@ -56,7 +57,10 @@ def serve(args):
 
     # Current working directory
     dir_path = Path().absolute()
-    web_dir = dir_path / "site"
+    yaml = YAML()
+    mkdocs_yml = yaml.load(open(dir_path / 'mkdocs.yml'))
+    site_dir = mkdocs_yml['site_dir'] if 'site_dir' in mkdocs_yml else 'site'
+    web_dir = dir_path / site_dir
 
     # Update routes
     utils.set_routes()
@@ -272,13 +276,17 @@ def init(args):
         )
         return
 
+    file_path = Path(__file__).resolve().parent / "include"
+
+    yaml = YAML()
+    mkdocs_yml = yaml.load(open(file_path / 'mkdocs.yml'))
+    docs_dir = mkdocs_yml['docs_dir'] if 'docs_dir' in mkdocs_yml else 'docs'
+
     # Directory with the Home Documentation's source code
-    home_doc_path = project_path / "docs"
+    home_doc_path = project_path / docs_dir
     home_doc_path.mkdir()
     help_doc_path = home_doc_path / "help"
     help_doc_path.mkdir()
-
-    file_path = Path(__file__).resolve().parent / "include"
 
     # Add initial files
     copyfile(file_path / "index.md", home_doc_path / "index.md")
@@ -288,9 +296,6 @@ def init(args):
         help_doc_path / "Writing_Sphinx_Documentation.md",
     )
 
-    with open(file_path / "mkdocs.yml", "r") as f:
-        lines = f.readlines()
-
     input_text = "What is your Documentation's name"
     input_text += " (it can be changed later in mkdocs.yml)?\n"
     input_text += "[Default: {} - Home Documentation]\n"
@@ -299,10 +304,9 @@ def init(args):
     if not site_name:
         site_name = "{} - Home Documentation".format(args.project_name.capitalize())
 
-    lines[0] = "site_name: {}\n".format(site_name)
+    mkdocs_yml['site_name'] = site_name
 
-    with open(project_path / "mkdocs.yml", "w") as f:
-        f.writelines(lines)
+    yaml.dump(mkdocs_yml, open(project_path / 'mkdocs.yml', 'w'))
 
     example_project_path = project_path / "example_project" / "example_project"
 

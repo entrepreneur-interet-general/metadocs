@@ -26,6 +26,8 @@ from watchdog.events import PatternMatchingEventHandler
 
 from .conf import HTML_LOCATION, NEW_HOME_LINK, PROJECT_KEY, TO_REPLACE_WITH_HOME
 
+from ruamel.yaml import YAML
+
 
 class colors:
     HEADER = "\033[95m"
@@ -104,7 +106,10 @@ def get_listed_projects():
     Returns:
         set(str): projects' names, with the '/' in their beginings
     """
-    index_path = Path().resolve() / "docs" / "index.md"
+    yaml = YAML()
+    mkdocs_yml = yaml.load(open(Path().resolve() / 'mkdocs.yml'))
+    docs_dir = mkdocs_yml['docs_dir'] if 'docs_dir' in mkdocs_yml else 'docs'
+    index_path = Path().resolve() / docs_dir / "index.md"
     with open(index_path, "r") as index_file:
         lines = index_file.readlines()
 
@@ -198,7 +203,11 @@ def make_offline():
     """
     dir_path = Path(os.getcwd()).absolute()
 
-    css_path = dir_path / "site" / "assets" / "stylesheets"
+    yaml = YAML()
+    mkdocs_yml = yaml.load(open(dir_path / 'mkdocs.yml'))
+    site_dir = mkdocs_yml['site_dir'] if 'site_dir' in mkdocs_yml else 'site'
+
+    css_path = dir_path / site_dir / "assets" / "stylesheets"
     material_css = css_path / "material-style.css"
     if not material_css.exists():
         include_path = Path(__file__).resolve().parent / "include"
@@ -206,7 +215,7 @@ def make_offline():
         copyfile(include_path / "material-icons.woff2", css_path / "material-icons.woff2")
 
     indexes = []
-    for root, _, filenames in os.walk(dir_path / "site"):
+    for root, _, filenames in os.walk(dir_path / site_dir):
         for filename in fnmatch.filter(filenames, "index.html"):
             indexes.append(os.path.join(root, filename))
     for index_file in indexes:
