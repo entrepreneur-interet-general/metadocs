@@ -21,7 +21,7 @@ Pygments==2.2.0
 pymdown-extensions==4.11
 pyparsing==2.2.0
 pytz==2018.5
-PyYAML==3.13
+PyYAML==5.4
 ruamel.yaml==0.15.75
 requests==2.19.1
 six==1.11.0
